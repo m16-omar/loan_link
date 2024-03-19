@@ -1,0 +1,8 @@
+import '../role_selection_screen/widgets/borrowerprofile_item_widget.dart';import 'controller/role_selection_controller.dart';import 'models/borrowerprofile_item_model.dart';import 'package:flutter/material.dart';import 'package:loan_link/core/app_export.dart';class RoleSelectionScreen extends GetWidget<RoleSelectionController> {const RoleSelectionScreen({Key? key}) : super(key: key);
+
+@override Widget build(BuildContext context) { mediaQueryData = MediaQuery.of(context); return SafeArea(child: Scaffold(body: SizedBox(width: double.maxFinite, child: Column(children: [Container(height: 47.v, width: double.maxFinite, decoration: BoxDecoration(color: theme.colorScheme.primaryContainer)), SizedBox(height: 32.v), Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.only(left: 20.h), child: Text("msg_which_best_describes".tr, style: CustomTextStyles.headlineSmallBluegray900))), SizedBox(height: 31.v), _buildBorrowerProfile()])))); } 
+/// Section Widget
+Widget _buildBorrowerProfile() { return Padding(padding: EdgeInsets.symmetric(horizontal: 20.h), child: Obx(() => ListView.separated(physics: NeverScrollableScrollPhysics(), shrinkWrap: true, separatorBuilder: (context, index) {return SizedBox(height: 40.v);}, itemCount: controller.roleSelectionModelObj.value.borrowerprofileItemList.value.length, itemBuilder: (context, index) {BorrowerprofileItemModel model = controller.roleSelectionModelObj.value.borrowerprofileItemList.value[index]; return BorrowerprofileItemWidget(model, onTapBorrowerProfile: () {onTapBorrowerProfile();});}))); } 
+/// Navigates to the businessOwnerInfoScreen when the action is triggered.
+onTapBorrowerProfile() { Get.toNamed(AppRoutes.businessOwnerInfoScreen, ); } 
+ }

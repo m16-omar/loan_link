@@ -1,0 +1,24 @@
+import '../loan_listings_screen/widgets/ogun_item_widget.dart';import '../loan_listings_screen/widgets/userprofileview_item_widget.dart';import 'controller/loan_listings_controller.dart';import 'models/ogun_item_model.dart';import 'models/userprofileview_item_model.dart';import 'package:flutter/material.dart';import 'package:loan_link/core/app_export.dart';import 'package:loan_link/presentation/borrower_home_empty_page/borrower_home_empty_page.dart';import 'package:loan_link/presentation/loans_empty_page/loans_empty_page.dart';import 'package:loan_link/widgets/app_bar/appbar_subtitle_one.dart';import 'package:loan_link/widgets/app_bar/appbar_trailing_image.dart';import 'package:loan_link/widgets/app_bar/custom_app_bar.dart';import 'package:loan_link/widgets/custom_bottom_bar.dart';class LoanListingsScreen extends GetWidget<LoanListingsController> {const LoanListingsScreen({Key? key}) : super(key: key);
+
+@override Widget build(BuildContext context) { mediaQueryData = MediaQuery.of(context); return SafeArea(child: Scaffold(appBar: _buildAppBar(), body: SizedBox(width: mediaQueryData.size.width, child: SingleChildScrollView(child: Column(children: [Container(height: 47.v, width: double.maxFinite, decoration: BoxDecoration(color: theme.colorScheme.primaryContainer)), SizedBox(height: 73.v), _buildRecommendedFor(), SizedBox(height: 9.v), _buildOgun(), SizedBox(height: 26.v), Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.only(left: 20.h), child: Text("msg_more_loan_listings".tr, style: CustomTextStyles.titleMediumMedium))), SizedBox(height: 9.v), _buildUserProfileView()]))), bottomNavigationBar: _buildBottomBar())); } 
+/// Section Widget
+PreferredSizeWidget _buildAppBar() { return CustomAppBar(title: AppbarSubtitleOne(text: "lbl_listings".tr, margin: EdgeInsets.only(left: 20.h)), actions: [AppbarTrailingImage(imagePath: ImageConstant.imgIconsBlack900, margin: EdgeInsets.symmetric(horizontal: 20.h))]); } 
+/// Section Widget
+Widget _buildRecommendedFor() { return Padding(padding: EdgeInsets.symmetric(horizontal: 20.h), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text("msg_recommended_for".tr, style: CustomTextStyles.titleMediumMedium), GestureDetector(onTap: () {onTapTxtSeeMore();}, child: Padding(padding: EdgeInsets.only(bottom: 2.v), child: Text("lbl_see_more".tr, style: CustomTextStyles.titleSmallPrimary_1)))])); } 
+/// Section Widget
+Widget _buildOgun() { return Padding(padding: EdgeInsets.symmetric(horizontal: 20.h), child: Obx(() => GridView.builder(shrinkWrap: true, gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(mainAxisExtent: 299.v, crossAxisCount: 2, mainAxisSpacing: 16.h, crossAxisSpacing: 16.h), physics: NeverScrollableScrollPhysics(), itemCount: controller.loanListingsModelObj.value.ogunItemList.value.length, itemBuilder: (context, index) {OgunItemModel model = controller.loanListingsModelObj.value.ogunItemList.value[index]; return OgunItemWidget(model, onTapFund: () {onTapFund();});}))); } 
+/// Section Widget
+Widget _buildUserProfileView() { return Padding(padding: EdgeInsets.symmetric(horizontal: 20.h), child: Obx(() => GridView.builder(shrinkWrap: true, gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(mainAxisExtent: 299.v, crossAxisCount: 2, mainAxisSpacing: 16.h, crossAxisSpacing: 16.h), physics: NeverScrollableScrollPhysics(), itemCount: controller.loanListingsModelObj.value.userprofileviewItemList.value.length, itemBuilder: (context, index) {UserprofileviewItemModel model = controller.loanListingsModelObj.value.userprofileviewItemList.value[index]; return UserprofileviewItemWidget(model, onTapFundButtonText: () {onTapFundButtonText();});}))); } 
+/// Section Widget
+Widget _buildBottomBar() { return CustomBottomBar(onChanged: (BottomBarEnum type) {Get.toNamed(getCurrentRoute(type), id: 1);}); } 
+///Handling route based on bottom click actions
+String getCurrentRoute(BottomBarEnum type) { switch (type) {case BottomBarEnum.Home: return AppRoutes.borrowerHomeEmptyPage; case BottomBarEnum.Loans: return AppRoutes.loansEmptyPage; case BottomBarEnum.Notifications: return "/"; case BottomBarEnum.Profile: return "/"; default: return "/";} } 
+///Handling page based on route
+Widget getCurrentPage(String currentRoute) { switch (currentRoute) {case AppRoutes.borrowerHomeEmptyPage: return BorrowerHomeEmptyPage(); case AppRoutes.loansEmptyPage: return LoansEmptyPage(); default: return DefaultWidget();} } 
+/// Navigates to the loanDetailsScreen when the action is triggered.
+onTapFundButtonText() { Get.toNamed(AppRoutes.loanDetailsScreen); } 
+/// Navigates to the loanDetailsScreen when the action is triggered.
+onTapFund() { Get.toNamed(AppRoutes.loanDetailsScreen); } 
+/// Navigates to the profileLoanListingsScreen when the action is triggered.
+onTapTxtSeeMore() { Get.toNamed(AppRoutes.profileLoanListingsScreen, ); } 
+ }

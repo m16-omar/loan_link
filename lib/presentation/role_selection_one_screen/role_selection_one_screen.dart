@@ -1,0 +1,8 @@
+import '../role_selection_one_screen/widgets/borrowermsmes_item_widget.dart';import 'controller/role_selection_one_controller.dart';import 'models/borrowermsmes_item_model.dart';import 'package:flutter/material.dart';import 'package:loan_link/core/app_export.dart';class RoleSelectionOneScreen extends GetWidget<RoleSelectionOneController> {const RoleSelectionOneScreen({Key? key}) : super(key: key);
+
+@override Widget build(BuildContext context) { mediaQueryData = MediaQuery.of(context); return SafeArea(child: Scaffold(body: SizedBox(width: double.maxFinite, child: Column(children: [Container(height: 47.v, width: double.maxFinite, decoration: BoxDecoration(color: theme.colorScheme.primaryContainer)), SizedBox(height: 32.v), Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.only(left: 20.h), child: Text("msg_which_best_describes".tr, style: CustomTextStyles.headlineSmallBluegray900))), SizedBox(height: 31.v), _buildBorrowerMSMEs()])))); } 
+/// Section Widget
+Widget _buildBorrowerMSMEs() { return Padding(padding: EdgeInsets.symmetric(horizontal: 20.h), child: Obx(() => ListView.separated(physics: NeverScrollableScrollPhysics(), shrinkWrap: true, separatorBuilder: (context, index) {return SizedBox(height: 40.v);}, itemCount: controller.roleSelectionOneModelObj.value.borrowermsmesItemList.value.length, itemBuilder: (context, index) {BorrowermsmesItemModel model = controller.roleSelectionOneModelObj.value.borrowermsmesItemList.value[index]; return BorrowermsmesItemWidget(model, onTapBorrowerMSMEs: () {onTapBorrowerMSMEs();});}))); } 
+/// Navigates to the borrowerHomeScreen when the action is triggered.
+onTapBorrowerMSMEs() { Get.toNamed(AppRoutes.borrowerHomeScreen, ); } 
+ }
